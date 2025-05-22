@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Cube</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        :root {
+            --primary: #4c52ff;
+            --facebook: #3b5998;
+            --twitter: #1da1f2;
+            --instagram: #c32aa3;
+            --linkedin: #0077b5;
+            --youtube: #ff0000;
+            --tiktok: #000000;
+            --pinterest: #bd081c;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #f5f7ff;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), #8a94ff);
+            border-radius: 10px;
+            margin-right: 10px;
+            display: grid;
+            place-items: center;
+            color: white;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(76, 82, 255, 0.7);
+            }
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 10px rgba(76, 82, 255, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(76, 82, 255, 0);
+            }
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            background: linear-gradient(to right, var(--primary), #8a94ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 8px 12px;
+            border-radius: 30px;
+        }
+
+        .user-profile:hover {
+            background: #f0f2ff;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            margin-right: 10px;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .user-profile:hover .user-avatar {
+            transform: scale(1.1);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 20px;
+        }
+
+        .sidebar {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+            height: fit-content;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            left: -100%;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(76, 82, 255, 0.1), transparent);
+            transition: 0.5s;
+        }
+
+        .menu-item:hover::before {
+            left: 100%;
+        }
+
+        .menu-item:hover {
+            background: #f0f2ff;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(76, 82, 255, 0.1);
+        }
+
+        .menu-item.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(76, 82, 255, 0.3);
+        }
+
+        .menu-icon {
+            margin-right: 10px;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .menu-item:hover .menu-icon {
+            transform: scale(1.2);
+        }
+
+        .content-area {
+            display: grid;
+            gap: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .stat-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 0;
+            background: var(--primary);
+            transition: height 0.3s ease;
+        }
+
+        .stat-card:hover::before {
+            height: 100%;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            margin-right: 10px;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover .stat-icon {
+            transform: scale(1.2);
+        }
+
+        .stat-card:nth-child(1) .stat-icon {
+            background: var(--facebook);
+            color: white;
+        }
+
+        .stat-card:nth-child(2) .stat-icon {
+            background: var(--twitter);
+            color: white;
+        }
+
+        .stat-card:nth-child(3) .stat-icon {
+            background: var(--instagram);
+            color: white;
+        }
+
+        .stat-card:nth-child(4) .stat-icon {
+            background: var(--linkedin);
+            color: white;
+        }
+
+        .stat-info h3 {
+            font-size: 0.9rem;
+            color: #666;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover .stat-info h3 {
+            color: #333;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-top: 5px;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover .stat-number {
+            color: var(--primary);
+        }
+
+        .growth {
+            font-size: 0.8rem;
+            color: #22c55e;
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .growth.negative {
+            color: #ef4444;
+        }
+
+        .composer-section {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        .composer-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .composer-header h2 {
+            font-size: 1.2rem;
+        }
+
+        .composer-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .composer-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 2px solid transparent;
+            position: relative;
+        }
+
+        .composer-tab::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .composer-tab:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        .composer-tab.active {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .composer-tab.active::after {
+            width: 100%;
+            left: 0;
+            background: var(--primary);
+        }
+
+        .composer-content {
+            margin-bottom: 20px;
+        }
+
+        .composer-textarea {
+            width: 100%;
+            min-height: 150px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            padding: 15px;
+            font-size: 1rem;
+            resize: none;
+            transition: var(--transition);
+            margin-bottom: 15px;
+        }
+
+        .composer-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(76, 82, 255, 0.2);
+        }
+
+        .composer-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .composer-tools {
+            display: flex;
+        }
+
+        .composer-tool {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #f5f7ff;
+            display: grid;
+            place-items: center;
+            margin-right: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .composer-tool::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(76, 82, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .composer-tool:hover::before {
+            left: 100%;
+        }
+
+        .composer-tool:hover {
+            background: #e0e4ff;
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 5px 15px rgba(76, 82, 255, 0.2);
+        }
+
+        .post-button {
+            padding: 12px 30px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(76, 82, 255, 0.3);
+        }
+
+        .post-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+        }
+
+        .post-button:hover::before {
+            left: 100%;
+        }
+
+        .post-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(76, 82, 255, 0.4);
+        }
+
+        .post-button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 10px rgba(76, 82, 255, 0.3);
+        }
+
+        .social-toggles {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .social-toggle {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            background: #f5f7ff;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .social-toggle:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .social-toggle::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            background: linear-gradient(135deg, rgba(255,255,255,0.3), transparent);
+        }
+
+        .social-toggle:hover::before {
+            opacity: 1;
+        }
+
+        .social-toggle.active {
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            border-color: transparent;
+        }
+
+        .social-toggle.facebook.active {
+            background: var(--facebook);
+        }
+
+        .social-toggle.twitter.active {
+            background: var(--twitter);
+        }
+
+        .social-toggle.instagram.active {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        }
+
+        .social-toggle.linkedin.active {
+            background: var(--linkedin);
+        }
+
+        .social-toggle.youtube.active {
+            background: var(--youtube);
+        }
+
+        .social-toggle.tiktok.active {
+            background: linear-gradient(to right, #25F4EE, #000000, #FE2C55);
+        }
+
+        .social-toggle.pinterest.active {
+            background: var(--pinterest);
+        }
+
+        .social-toggle-icon {
+            margin-right: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .social-toggle:hover .social-toggle-icon {
+            transform: scale(1.2);
+        }
+
+        .scheduled-posts {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .scheduled-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .scheduled-header h2 {
+            font-size: 1.2rem;
+        }
+
+        .scheduled-header span {
+            cursor: pointer;
+            color: var(--primary);
+            font-weight: 600;
+            transition: var(--transition);
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        .scheduled-header span:hover {
+            background: #f0f2ff;
+        }
+
+        .scheduled-list {
+            display: grid;
+            gap: 15px;
+        }
+
+        .scheduled-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            background: #f9faff;
+            transition: var(--transition);
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .scheduled-item:hover {
+            background: #f0f2ff;
+            border-color: rgba(76, 82, 255, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .scheduled-content {
+            flex: 1;
+        }
+
+        .scheduled-meta {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        .scheduled-platforms {
+            display: flex;
+            margin-left: 15px;
+        }
+
+        .scheduled-platform {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            margin-right: 5px;
+            font-size: 0.6rem;
+            color: white;
+            transition: var(--transition);
+        }
+
+        .scheduled-platform:hover {
+            transform: scale(1.2);
+        }
+
+        .scheduled-platform.facebook {
+            background: var(--facebook);
+        }
+
+        .scheduled-platform.twitter {
+            background: var(--twitter);
+        }
+
+        .scheduled-platform.instagram {
+            background: var(--instagram);
+        }
+
+        .scheduled-platform.linkedin {
+            background: var(--linkedin);
+        }
+
+        .scheduled-platform.youtube {
+            background: var(--youtube);
+        }
+
+        .scheduled-platform.tiktok {
+            background: var(--tiktok);
+        }
+
+        .scheduled-text {
+            font-size: 0.9rem;
+            color: #333;
+            transition: var(--transition);
+        }
+
+        .scheduled-item:hover .scheduled-text {
+            color: var(--primary);
+        }
+
+        .scheduled-actions {
+            display: flex;
+        }
+
+        .scheduled-action {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            margin-left: 8px;
+            background: #f5f7ff;
+            cursor: pointer;
+            transition: var(--transition);
+            color: #666;
+        }
+
+        .scheduled-action:hover {
+            background: #e0e4ff;
+            color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        .quick-post {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            box-shadow: 0 4px 20px rgba(76, 82, 255, 0.4);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.5rem;
+            z-index: 100;
+            border: none;
+            outline: none;
+        }
+
+        .quick-post:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 6px 30px rgba(76, 82, 255, 0.6);
+        }
+
+        .quick-post:active {
+            transform: scale(0.95);
+        }
+
+        /* Tooltip styles */
+        [data-tooltip] {
+            position: relative;
+        }
+
+        [data-tooltip]::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        [data-tooltip]:hover::after {
+            opacity: 1;
+            visibility: visible;
+            bottom: calc(100% + 5px);
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            background: #f5f7ff;
+            transition: var(--transition);
+            border: none;
+        }
+
+        .close-modal:hover {
+            background: #e0e4ff;
+            transform: rotate(90deg);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: flex;
+                overflow-x: auto;
+                padding: 15px;
+                gap: 10px;
+                margin-bottom: 20px;
+            }
+            
+            .menu-item {
+                margin-bottom: 0;
+                padding: 10px;
+                white-space: nowrap;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .logo {
+                margin-bottom: 10px;
+            }
+            
+            .composer-footer {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .composer-tools {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .post-button {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .composer-tabs {
+                overflow-x: auto;
+                white-space: nowrap;
+                padding-bottom: 5px;
+            }
+            
+            .composer-tab {
+                padding: 10px 15px;
+            }
+        }
+
+        /* Animation Effects */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .composer-section, .scheduled-posts, .stat-card {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .stat-card:nth-child(1) { animation-delay: 0.1s; }
+        .stat-card:nth-child(2) { animation-delay: 0.2s; }
+        .stat-card:nth-child(3) { animation-delay: 0.3s; }
+        .stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+        .menu-item {
+            opacity: 0;
+            animation: fadeIn 0.3s ease forwards;
+        }
+
+        .menu-item:nth-child(1) { animation-delay: 0.1s; }
+        .menu-item:nth-child(2) { animation-delay: 0.2s; }
+        .menu-item:nth-child(3) { animation-delay: 0.3s; }
+        .menu-item:nth-child(4) { animation-delay: 0.4s; }
+        .menu-item:nth-child(5) { animation-delay: 0.5s; }
+
+        .scheduled-item {
+            opacity: 0;
+            animation: fadeIn 0.3s ease forwards;
+        }
+
+        .scheduled-item:nth-child(1) { animation-delay: 0.1s; }
+        .scheduled-item:nth-child(2) { animation-delay: 0.2s; }
+        .scheduled-item:nth-child(3) { animation-delay: 0.3s; }
+
+        /* Floating animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .quick-post {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Pulse animation for notifications */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 18px;
+            height: 18px;
+            background: #ff5252;
+            color: white;
+            border-radius: 50%;
+            font-size: 0.6rem;
+            display: grid;
+            place-items: center;
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">SM</div>
+                <h1>Social Cube</h1>
+            </div>
+            <div class="user-profile">
+                <div class="user-avatar">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User Avatar">
+                </div>
+                <span>Jane Doe</span>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="sidebar">
+                <div class="menu-item active">
+                    <span class="menu-icon"><i class="fas fa-chart-pie"></i></span>
+                    <span>Dashboard</span>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-icon"><i class="fas fa-edit"></i></span>
+                    <span>Composer</span>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-icon"><i class="fas fa-calendar-alt"></i></span>
+                    <span>Calendar</span>
+                    <div class="notification-badge">3</div>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-icon"><i class="fas fa-chart-line"></i></span>
+                    <span>Analytics</span>
+                </div>
+                <div class="menu-item">
+                    <span class="menu-icon"><i class="fas fa-cog"></i></span>
+                    <span>Settings</span>
+                </div>
+            </div>
+
+            <div class="content-area">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon">
+                                <i class="fab fa-facebook-f"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Facebook</h3>
+                            </div>
+                        </div>
+                        <div class="stat-number">15.2k</div>
+                        <div class="growth">+5.3% this week</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon">
+                                <i class="fab fa-twitter"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Twitter</h3>
+                            </div>
+                        </div>
+                        <div class="stat-number">8.4k</div>
+                        <div class="growth">+2.7% this week</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon">
+                                <i class="fab fa-instagram"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Instagram</h3>
+                            </div>
+                        </div>
+                        <div class="stat-number">23.6k</div>
+                        <div class="growth">+7.8% this week</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div class="stat-icon">
+                                <i class="fab fa-linkedin-in"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>LinkedIn</h3>
+                            </div>
+                        </div>
+                        <div class="stat-number">5.9k</div>
+                        <div class="growth negative">-1.2% this week</div>
+                    </div>
+                </div>
+
+                <div class="composer-section">
+                    <div class="composer-header">
+                        <h2>Create New Post</h2>
+                    </div>
+
+                    <div class="composer-tabs">
+                        <div class="composer-tab active">Single Post</div>
+                        <div class="composer-tab">Thread</div>
+                        <div class="composer-tab">Story</div>
+                    </div>
+
+                    <div class="social-toggles">
+                        <div class="social-toggle facebook active">
+                            <span class="social-toggle-icon"><i class="fab fa-facebook-f"></i></span>
+                            <span>Facebook</span>
+                        </div>
+                        <div class="social-toggle twitter active">
+                            <span class="social-toggle-icon"><i class="fab fa-twitter"></i></span>
+                            <span>Twitter</span>
+                        </div>
+                        <div class="social-toggle instagram active">
+                            <span class="social-toggle-icon"><i class="fab fa-instagram"></i></span>
+                            <span>Instagram</span>
+                        </div>
+                        <div class="social-toggle linkedin">
+                            <span class="social-toggle-icon"><i class="fab fa-linkedin-in"></i></span>
+                            <span>LinkedIn</span>
+                        </div>
+                        <div class="social-toggle youtube">
+                            <span class="social-toggle-icon"><i class="fab fa-youtube"></i></span>
+                            <span>YouTube</span>
+                        </div>
+                        <div class="social-toggle tiktok">
+                            <span class="social-toggle-icon"><i class="fab fa-tiktok"></i></span>
+                            <span>TikTok</span>
+                        </div>
+                        <div class="social-toggle pinterest">
+                            <span class="social-toggle-icon"><i class="fab fa-pinterest-p"></i></span>
+                            <span>Pinterest</span>
+                        </div>
+                    </div>
+
+                    <div class="composer-content">
+                        <textarea class="composer-textarea" placeholder="What would you like to share?"></textarea>
+                    </div>
+
+                    <div class="composer-footer">
+                        <div class="composer-tools">
+                            <div class="composer-tool" data-tooltip="Add Image"><i class="fas fa-image"></i></div>
+                            <div class="composer-tool" data-tooltip="Add Video"><i class="fas fa-video"></i></div>
+                            <div class="composer-tool" data-tooltip="Add Poll"><i class="fas fa-chart-bar"></i></div>
+                            <div class="composer-tool" data-tooltip="Add Emoji"><i class="far fa-smile"></i></div>
+                            <div class="composer-tool" data-tooltip="Schedule"><i class="far fa-calendar-alt"></i></div>
+                        </div>
+                        <button class="post-button">Post to All Platforms</button>
+                    </div>
+                </div>
+
+                <div class="scheduled-posts">
+                    <div class="scheduled-header">
+                        <h2>Scheduled Posts</h2>
+                        <span id="viewAllScheduled">View All</span>
+                    </div>
+
+                    <div class="scheduled-list">
+                        <div class="scheduled-item">
+                            <div class="scheduled-content">
+                                <div class="scheduled-meta">
+                                    May 20, 2025 • 09:30 AM
+                                    <div class="scheduled-platforms">
+                                        <div class="scheduled-platform facebook"><i class="fab fa-facebook-f"></i></div>
+                                        <div class="scheduled-platform twitter"><i class="fab fa-twitter"></i></div>
+                                        <div class="scheduled-platform instagram"><i class="fab fa-instagram"></i></div>
+                                    </div>
+                                </div>
+                                <div class="scheduled-text">
+                                    Excited to announce our new product launch! Stay tuned for more details. #NewProduct #ComingSoon
+                                </div>
+                            </div>
+                            <div class="scheduled-actions">
+                                <div class="scheduled-action" data-tooltip="Edit"><i class="fas fa-edit"></i></div>
+                                <div class="scheduled-action" data-tooltip="Delete"><i class="fas fa-trash-alt"></i></div>
+                            </div>
+                        </div>
+
+                        <div class="scheduled-item">
+                            <div class="scheduled-content">
+                                <div class="scheduled-meta">
+                                    May 21, 2025 • 12:00 PM
+                                    <div class="scheduled-platforms">
+                                        <div class="scheduled-platform linkedin"><i class="fab fa-linkedin-in"></i></div>
+                                    </div>
+                                </div>
+                                <div class="scheduled-text">
+                                    Looking for talented developers to join our growing team! Apply now at careers.company.com #Hiring #TechJobs
+                                </div>
+                            </div>
+                            <div class="scheduled-actions">
+                                <div class="scheduled-action" data-tooltip="Edit"><i class="fas fa-edit"></i></div>
+                                <div class="scheduled-action" data-tooltip="Delete"><i class="fas fa-trash-alt"></i></div>
+                            </div>
+                        </div>
+
+                        <div class="scheduled-item">
+                            <div class="scheduled-content">
+                                <div class="scheduled-meta">
+                                    May 22, 2025 • 03:00 PM
+                                    <div class="scheduled-platforms">
+                                        <div class="scheduled-platform facebook"><i class="fab fa-facebook-f"></i></div>
+                                        <div class="scheduled-platform instagram"><i class="fab fa-instagram"></i></div>
+                                    </div>
+                                </div>
+                                <div class="scheduled-text">
+                                    Don't miss our weekend sale! Get 25% off all products using code WEEKEND25. #WeekendSale #LimitedTimeOffer
+                                </div>
+                            </div>
+                            <div class="scheduled-actions">
+                                <div class="scheduled-action" data-tooltip="Edit"><i class="fas fa-edit"></i></div>
+                                <div class="scheduled-action" data-tooltip="Delete"><i class="fas fa-trash-alt"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="quick-post" id="quickPostBtn">
+        <i class="fas fa-plus"></i>
+    </div>
+
+    <!-- Modal for Quick Post -->
+    <div class="modal" id="quickPostModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">&times;</button>
+            <h2>Quick Post</h2>
+            <p>What would you like to share quickly?</p>
+            <textarea class="composer-textarea" placeholder="Write your quick post here..." style="min-height: 100px; margin: 15px 0;"></textarea>
+            <div class="social-toggles" style="margin-bottom: 15px;">
+                <div class="social-toggle facebook active">
+                    <span class="social-toggle-icon"><i class="fab fa-facebook-f"></i></span>
+                </div>
+                <div class="social-toggle twitter active">
+                    <span class="social-toggle-icon"><i class="fab fa-twitter"></i></span>
+                </div>
+                <div class="social-toggle instagram active">
+                    <span class="social-toggle-icon"><i class="fab fa-instagram"></i></span>
+                </div>
+            </div>
+            <button class="post-button" style="width: 100%;">Post Now</button>
+        </div>
+    </div>
+
+    <script>
+        // Add interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle social platforms with animation
+            const socialToggles = document.querySelectorAll('.social-toggle');
+            socialToggles.forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    // Add a little bounce animation
+                    this.style.animation = 'none';
+                    setTimeout(() => {
+                        this.style.animation = 'bounce 0.5s';
+                    }, 10);
+                });
+            });
+            
+            // Define bounce animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes bounce {
+                    0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+                    40% {transform: translateY(-10px);}
+                    60% {transform: translateY(-5px);}
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Add smooth transitions when scrolling
+            const elements = document.querySelectorAll('.stat-card, .composer-section, .scheduled-posts');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            elements.forEach(element => {
+                observer.observe(element);
+            });
+            
+            // Tab switching
+            const tabs = document.querySelectorAll('.composer-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Menu item switching
+            const menuItems = document.querySelectorAll('.menu-item');
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    menuItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Post button effect with confetti animation
+            const postButton = document.querySelector('.post-button');
+            postButton.addEventListener('click', function() {
+                this.innerHTML = "Posted Successfully! 🎉";
+                
+                // Create confetti effect
+                createConfetti();
+                
+                setTimeout(() => {
+                    this.innerHTML = "Post to All Platforms";
+                }, 2000);
+            });
+            
+            // Confetti animation function
+            function createConfetti() {
+                const confettiContainer = document.createElement('div');
+                confettiContainer.style.position = 'fixed';
+                confettiContainer.style.top = '0';
+                confettiContainer.style.left = '0';
+                confettiContainer.style.width = '100%';
+                confettiContainer.style.height = '100%';
+                confettiContainer.style.pointerEvents = 'none';
+                confettiContainer.style.zIndex = '9999';
+                document.body.appendChild(confettiContainer);
+                
+                const colors = ['#4c52ff', '#ff5252', '#43a047', '#ffb300', '#3949ab', '#8a94ff'];
+                
+                for (let i = 0; i < 100; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.style.position = 'absolute';
+                    confetti.style.width = (Math.random() * 10 + 5) + 'px';
+                    confetti.style.height = (Math.random() * 5 + 5) + 'px';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.left = (Math.random() * 100) + '%';
+                    confetti.style.top = '-20px';
+                    confetti.style.borderRadius = '50%';
+                    confetti.style.opacity = Math.random() + 0.5;
+                    
+                    confettiContainer.appendChild(confetti);
+                    
+                    const duration = Math.random() * 3 + 2;
+                    const leftShift = (Math.random() * 40 - 20);
+                    
+                    confetti.animate(
+                        [
+                            { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                            { transform: `translateY(${window.innerHeight}px) translateX(${leftShift}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+                        ],
+                        {
+                            duration: duration * 1000,
+                            easing: 'cubic-bezier(.55,.06,.68,.19)'
+                        }
+                    );
+                }
+                
+                setTimeout(() => {
+                    confettiContainer.remove();
+                }, 5000);
+            }
+            
+            // Quick post modal functionality
+            const quickPostBtn = document.getElementById('quickPostBtn');
+            const quickPostModal = document.getElementById('quickPostModal');
+            const closeModal = document.getElementById('closeModal');
+            
+            quickPostBtn.addEventListener('click', function() {
+                quickPostModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            closeModal.addEventListener('click', function() {
+                quickPostModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Close modal when clicking outside
+            quickPostModal.addEventListener('click', function(e) {
+                if (e.target === quickPostModal) {
+                    quickPostModal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+            
+            // View all scheduled posts
+            const viewAllBtn = document.getElementById('viewAllScheduled');
+            viewAllBtn.addEventListener('click', function() {
+                alert('Showing all scheduled posts!');
+                // In a real app, this would load more posts or navigate to a dedicated page
+            });
+            
+            // Add ripple effect to buttons
+            document.querySelectorAll('.post-button, .scheduled-action, .composer-tool').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    const x = e.clientX - e.target.getBoundingClientRect().left;
+                    const y = e.clientY - e.target.getBoundingClientRect().top;
+                    
+                    const ripple = document.createElement('span');
+                    ripple.style.left = `${x}px`;
+                    ripple.style.top = `${y}px`;
+                    ripple.classList.add('ripple');
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 1000);
+                });
+            });
+            
+            // Add ripple effect styles
+            const rippleStyle = document.createElement('style');
+            rippleStyle.textContent = `
+                .ripple {
+                    position: absolute;
+                    width: 20px;
+                    height: 20px;
+                    background: rgba(255, 255, 255, 0.5);
+                    border-radius: 50%;
+                    transform: scale(0);
+                    animation: ripple 0.6s linear;
+                    pointer-events: none;
+                }
+                
+                @keyframes ripple {
+                    to {
+                        transform: scale(4);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(rippleStyle);
+        });
+    </script>
+</body>
+</html>
